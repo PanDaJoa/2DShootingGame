@@ -4,7 +4,36 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public int Health = 10;
+    private int _health = 5;
+
+    public int GetHealth()
+    {
+        return _health;
+    }
+
+    public void MinusHealth(int health)
+    {
+        _health -= health;
+        Debug.Log($"체력감소:{health} 체력:{_health}");
+
+        // 플레이어 체력이 적다면..
+        if (_health <= 0)
+        {
+            Destroy(gameObject);
+        }
+
+    }
+    public void PlusHealth(int health)
+    {
+        _health += _health;
+        Debug.Log($"체력추가:{health} 체력:{_health}");
+    }
+
+    public void SetHealth(int health)
+    {
+        _health = health;
+    }
+
 
     private void Start()
     {
@@ -21,4 +50,5 @@ public class Player : MonoBehaviour
         playerMove.Speed = 5f;
         Debug.Log(playerMove.Speed);*/
     }
+
 }

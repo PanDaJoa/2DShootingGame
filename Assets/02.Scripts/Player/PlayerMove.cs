@@ -14,7 +14,7 @@ public class PlayerMove : MonoBehaviour
         3. 이동할 방향과 이동 속력에 따라 플레이어를 이동시킨다.
     **/
 
-    public float Speed = 3f; // 이동 속도: 초당 3unit만큼 이동하겠다.
+    private float Speed = 3f; // 이동 속도: 초당 3unit만큼 이동하겠다.
 
     public const float MinX = -3f;
     public const float MaxX = 3f;
@@ -123,5 +123,19 @@ public class PlayerMove : MonoBehaviour
             Speed++;
         }
     }
+    public float GetSpeed()
+    {
+        return Speed;
+    }
 
+    public void SetSpeed(float speed)
+    {
+        Speed = speed;
+    }
+
+    public void AddSpeed(float speed)
+    {
+        Speed += speed;
+        Debug.Log($"스피드추가:{speed} 스피드:{Speed}");
+    }
 }

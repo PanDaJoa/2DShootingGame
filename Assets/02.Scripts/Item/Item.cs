@@ -54,7 +54,7 @@ public class Item : MonoBehaviour
     // (다른 콜라이더에 의해) 트리거가 발동될 때 
     private void OnTriggerEnter2D(Collider2D otherCollider)
     {
-        Debug.Log("트리거 시작!");
+       // Debug.Log("트리거 시작!");
     }
 
 
@@ -68,13 +68,14 @@ public class Item : MonoBehaviour
             if(MyType == 0) 
             {
                 Player player = otherCollider.GetComponent<Player>();
-                player.Health += 1;
+                player.PlusHealth(1);
             }
             else if(MyType == 1) 
             {
                 // 타입이 1이면 플레이어의 스피드올려주기
                 PlayerMove playerMove = otherCollider.GetComponent<PlayerMove>();
-                playerMove.Speed += 0.0001f;
+                //playerMove.SetSpeed(playerMove.GetSpeed() + 1);
+                playerMove.AddSpeed(1);
             }
 
             GameObject vfx = Instantiate(EatVFXPrefab);
@@ -89,7 +90,7 @@ public class Item : MonoBehaviour
     private void OnTriggerExit2D(Collider2D otherCollider)
     {
         _timer = 0f;
-        Debug.Log("트리거 종료!");
+       // Debug.Log("트리거 종료!");
     }
 
 }
