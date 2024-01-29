@@ -205,8 +205,8 @@ public class Enemy : MonoBehaviour
         //scoreManager.SetScore(score + 1);
         //Debug.Log(scoreManager.GetScore());
 
-        ScoreManager.instance.AddScore();
-        
+        //ScoreManager.instance.AddScore();
+        ScoreManager.instance.Score += 1;
         //scoreManager.AddScore();
 
         
