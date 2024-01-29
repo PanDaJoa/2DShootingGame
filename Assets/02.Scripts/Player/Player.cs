@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
     }
     public void PlusHealth(int health)
     {
-        _health += _health;
+        _health += health;
         Debug.Log($"체력추가:{health} 체력:{_health}");
     }
 

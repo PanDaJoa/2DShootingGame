@@ -197,14 +197,19 @@ public class Enemy : MonoBehaviour
 
         // 목표: 스코어를 증가시키고 싶다.
         // 1. 씬에서 ScoreManager 게임 오브젝트를 찾아온다.
-        GameObject smGameObject = GameObject.Find("ScoreManager");
+        //GameObject smGameObject = GameObject.Find("ScoreManager");
         // 2. ScoreManager 게임 오브젝트에서 ScoreManager 스크립트 컴포넌트를 얻어온다.
-        ScoreManager scoreManager = smGameObject.GetComponent<ScoreManager>();
+        //ScoreManager scoreManager = smGameObject.GetComponent<ScoreManager>();
         // 3. 컴포넌트의 Score 속성을 증가시킨다.
-        int score = scoreManager.GetScore();
+        //int score = scoreManager.GetScore();
         //scoreManager.SetScore(score + 1);
         //Debug.Log(scoreManager.GetScore());
-        scoreManager.AddScore();
+
+        ScoreManager.instance.AddScore();
+        
+        //scoreManager.AddScore();
+
+        
     }
     public void MakeItem()
     {
