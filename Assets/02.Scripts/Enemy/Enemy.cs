@@ -171,7 +171,8 @@ public class Enemy : MonoBehaviour
 
 
             // 총알 삭제
-            Destroy(collision.collider.gameObject);
+            // Destroy(collision.collider.gameObject);
+            collision.collider.gameObject.SetActive(false);
         }
     }
 
