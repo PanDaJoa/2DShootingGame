@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,5 +34,10 @@ public class Bullet : MonoBehaviour
         //transform.Translate(dir * Speed * Time.deltaTime);
         // 새로운 위치 = 현재위치 * 속도 * 시간
         transform.position += (Vector3)(dir * Speed) * Time.deltaTime;
+    }
+
+    public static implicit operator GameObject(Bullet v)
+    {
+        throw new NotImplementedException();
     }
 }

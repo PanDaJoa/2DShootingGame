@@ -51,6 +51,10 @@ public class Enemy : MonoBehaviour
         // 캐싱: 자주 쓰는 데이터를 더 가까운 장소에 저장해두고 필요할때 가져다 쓰는거
         // 시작할 때 플레이어를 찾아서 기억해둔다.
         _target = GameObject.Find("Player");
+        if(_target == null)
+        {
+            EType = EnemyType.Basic;
+        }
 
         MyAnimator = GetComponent<Animator>();
 
@@ -192,7 +196,7 @@ public class Enemy : MonoBehaviour
     public void Death()
     {
         // 나죽자
-        Destroy(this.gameObject);
+        gameObject.SetActive(false);
         GameObject vfx = Instantiate(ExplosionVFXPrefab);
         vfx.transform.position = this.transform.position;
 

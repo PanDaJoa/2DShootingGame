@@ -75,7 +75,7 @@ public class Item : MonoBehaviour
                 // 타입이 1이면 플레이어의 스피드올려주기
                 PlayerMove playerMove = otherCollider.GetComponent<PlayerMove>();
                 //playerMove.SetSpeed(playerMove.GetSpeed() + 1);
-                playerMove.AddSpeed(1);
+                playerMove.AddSpeed(0.01f);
             }
 
             GameObject vfx = Instantiate(EatVFXPrefab);
