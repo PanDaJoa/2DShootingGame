@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemySpanwer : MonoBehaviour
@@ -16,6 +17,10 @@ public class EnemySpanwer : MonoBehaviour
     public float SpawnTime = 1.2f;
     public float CurrentTimer = 0f;
 
+    // - 풀 사이즈
+    public int PoolSize = 15;
+    // - 오브젝트(Enemy) 풀(창고)
+    private List<Enemy> EnemyPool;
 
     // 목표: 적 생성 시간을 랜덤하게 하고 싶다.
     // 필요 속성:
@@ -28,6 +33,32 @@ public class EnemySpanwer : MonoBehaviour
     {
         // 시작할 때 적 생성 시간을 랜덤하게 설정한다.
         SetRandomTime();
+    }
+
+    private void Awake()
+    {
+        EnemyPool = new List<Enemy>();
+        // (생서 -> 끄고 -> 넣는다) * PoolSize(15).
+        for (int i = 0; i < PoolSize; i++)
+        {
+            GameObject enemyObject = Instantiate(EnemyPrefab);
+            enemyObject.SetActive(false);
+            EnemyPool.Add(enemyObject.GetComponent<Enemy>());
+        }
+        for (int i = 0; i < PoolSize; i++)
+        {
+            GameObject enemyObject = Instantiate(EnemyPrefabTarget);
+            enemyObject.SetActive(false);
+            EnemyPool.Add(enemyObject.GetComponent<Enemy>());
+        }
+        for (int i = 0; i < PoolSize; i++)
+        {
+            GameObject enemyObject = Instantiate(EnemyPrefabFollow);
+            enemyObject.SetActive(false);
+            EnemyPool.Add(enemyObject.GetComponent<Enemy>());
+        }
+
+
     }
 
     private void SetRandomTime()
@@ -46,25 +77,52 @@ public class EnemySpanwer : MonoBehaviour
         {
             // 3. 프리팹으로부터 적을 생성한다.
             // 30% 확률로 Target형, 나머지 확률(70%) Basic형 적 생성하게 하기
-            GameObject enemy = null;
+            Enemy enemy = null;
             int randomNumber = Random.Range(0, 10);  // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
             if(randomNumber < 1)
             {
-                enemy = Instantiate(EnemyPrefabFollow);
+                foreach(Enemy e in EnemyPool)
+                {
+                    if(e.gameObject.activeInHierarchy == false && e.EType == EnemyType.Follow)
+                    {
+                        enemy = e; 
+                        break;
+                    }
+                }
             }
             else if(randomNumber < 4)
             {
-                enemy = Instantiate(EnemyPrefabTarget);
+                foreach (Enemy e in EnemyPool)
+                {
+                    if (e.gameObject.activeInHierarchy == false && e.EType == EnemyType.Target)
+                    {
+                        enemy = e;
+                        break;
+                    }
+                }
             }
             else
             {
-                enemy = Instantiate(EnemyPrefab);
+                foreach (Enemy e in EnemyPool)
+                {
+                    if (e.gameObject.activeInHierarchy == false && e.EType == EnemyType.Basic)
+                    {
+                        enemy = e;
+                        break;
+                    }
+                }
             }
 
 
+
+
             // 4. 생성한 적의 위치를 내 위치로 바꾼다.
-            enemy.transform.position = this.transform.position;
+
             
+            enemy.transform.position = this.transform.position;
+
+            enemy.gameObject.SetActive(true);
+
             // 타이머 초기화
             CurrentTimer = 0f;
 
