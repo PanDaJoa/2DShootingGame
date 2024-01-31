@@ -93,6 +93,16 @@ public class PlayerFire : MonoBehaviour
 
     private void Start()
     {
+        // 전처리 단계: 코드가 컴파일(해석) 되기 전에 미리 처리되는 단계
+        // 전처리문 코드를 이용해서 미리 처리되는 코드를 작성할 수 있다.
+        // C#의 모든 전처리 코드는 '#'으로 시작한다. (#if, #elif, #endif)
+#if UNITY_EDITOR || UNITY_STANDALONE
+        GameObject.Find("Joystick canvas XYBZ").SetActive(false);
+#endif
+
+#if UNITY_ANDROID
+     Debug.Log("안드로이드 입니다.");
+#endif 
         Debug.Log(Application.dataPath);
         Timer = 0f;
         AutoMode = false;
@@ -101,21 +111,19 @@ public class PlayerFire : MonoBehaviour
     void Update()
     {
         // 타이머 계산
-
+        Timer -= Time.deltaTime;
+        
         CheckAutoMode();
 
         BoomTimer -= Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             Boom();
-        }  
-        
-        Timer -= Time.deltaTime;            
-        bool ready = AutoMode || Input.GetKeyDown(KeyCode.Space);        
+        }
+        bool ready = AutoMode || Input.GetKeyDown(KeyCode.Space);
         if (Timer <= 0 && ready)
         {
             Fire();
-            
         }
         
 
@@ -151,24 +159,11 @@ public class PlayerFire : MonoBehaviour
         }
     }
 
-    private void OnClickAutoMode()
-    {
-        if (AutoMode == false)
-        {
-            Debug.Log("자동 공격 모드");
-            AutoMode = true;
-        }
-        else if (AutoMode == true)
-        {
-            Debug.Log("수동 공격 모드");
-            AutoMode = false;
-        }
-    }
-
     private void Fire()
     {
         // 1. 타이머가 0보다 작은 상태에서 발사 버튼을 누르거나 자동 공격 모드면
-
+        bool ready = AutoMode;
+        if (Timer <= 0)
         {
             FireSource.Play();
 
@@ -259,10 +254,7 @@ public class PlayerFire : MonoBehaviour
     {
         Debug.Log("X버튼이 클릭되었습니다.");
 
-        if (Timer <= 0)
-        {
-            Fire();
-        }
+        Fire();
     }
 
     // 자동 공격 on/off
@@ -270,7 +262,7 @@ public class PlayerFire : MonoBehaviour
     {
         Debug.Log("Y버튼이 클릭되었습니다.");
 
-        OnClickAutoMode();
+        AutoMode = !AutoMode;
     }
 
     // 궁극기 사용
