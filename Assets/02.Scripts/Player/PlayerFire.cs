@@ -73,7 +73,7 @@ public class PlayerFire : MonoBehaviour
         public GameObject[] SubMuzzles;  // 보조 총구들*/
 
     [Header("타이머")]
-    public float Timer = 10f;
+    public float Timer = 0;
     public const float COOL_TIME = 0.6f;
 
     public float BoomTimer = 3f;
